@@ -6,13 +6,6 @@ from bs4 import BeautifulSoup
 import re
 from fake_user_agent.main import user_agent
 
-#В качестве URL передаем ссылку на сайт онлайн кинотеатра Wink
-URL = 'https://wink.ru'
-#Настраеваем липовый юзерагент для работы с защищенными сайтами
-user_agent = user_agent("chrome")
-#Передаем в переменную headers значения юзерагента
-headers = {'accept': '*/*', 'user-agent': user_agent}
-
 def without_post(url, headers):
     response = requests.get(url, headers=headers)
     Links = []
@@ -30,15 +23,19 @@ def without_post(url, headers):
         print("Connection Error")
     return Links
 
-links = without_post(URL, headers)
-working_links = []
-#Проверяем что ссылки рабочие
-for link in links:
-    response = requests.get(link, headers=headers)
-    if response.status_code == 200:
-        working_links.append(link)
-        print(f'Ссылка {link} работает и добавлена в словарь добавлена')
-    else:
-        print(f'Ссылка {link} не отвечает')
+def working_check(links):
+    #Проверяем что ссылки рабочие
+    working_links = []
+    for link in links:
+        response = requests.get(link, headers=headers)
+        if response.status_code == 200:
+            working_links.append(link)
+            print(f'Ссылка {link} работает и добавлена в словарь добавлена')
+        else:
+            print(f'Ссылка {link} не отвечает')
+    return working_links
 
-for x in working_links: print(x)
+links = without_post(URL, headers)
+
+
+#for x in working_links: print(x)

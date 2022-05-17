@@ -1,16 +1,26 @@
-# This is a sample Python script.
+import os
+import requests
+from urllib.request import urlopen
+from urllib.response import addinfourl
+import urllib
+from bs4 import BeautifulSoup
+import re
+from fake_user_agent.main import user_agent
+import Links_extract
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+DIR = os.path.dirname(os.path.abspath(__file__))
+#В качестве URL передаем ссылку на сайт онлайн кинотеатра Wink
+URL = 'https://wink.ru/media_items'
+#Настраеваем липовый юзерагент для работы с защищенными сайтами
+user_agent = user_agent("chrome")
+#Передаем в переменную headers значения юзерагента
+headers = {'accept': '*/*', 'user-agent': user_agent}
 
+#Поиск всех ссылок
+links = Links_extract.without_post(URL, headers)
+#Проверка работоспособности ссылок
+working_links = Links_extract.working_check(links)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+with open(DIR + 'links.txt', 'w', encoding='utf-8') as info:
+    for line in working_links:
+        info.write(line)
