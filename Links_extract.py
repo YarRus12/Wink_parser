@@ -35,7 +35,9 @@ def working_check(links):
             print(f'Ссылка {link} не отвечает')
     return working_links
 
-links = without_post(URL, headers)
 
+if __name__ == '__main__':
+    links = without_post(URL, headers)
+    working_check(links)
 
 #for x in working_links: print(x)
