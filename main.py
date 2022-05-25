@@ -21,7 +21,7 @@ links = Links_extract.without_post(URL, headers)
 #Проверка работоспособности ссылок
 working_links = Links_extract.working_check(links)
 
-#Все ссылки сохраняем в отдельный файл
+#Все работоспособные ссылки сохраняем в отдельный файл
 with open(DIR + 'links.txt', 'w', encoding='utf-8') as info:
     for line in working_links:
         info.write(line)
