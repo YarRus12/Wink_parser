@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 import re
 from fake_user_agent.main import user_agent
 import Links_extract
+import Functional
+import Media_parser
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 #В качестве URL передаем ссылку на сайт онлайн кинотеатра Wink
@@ -25,5 +27,10 @@ working_links = Links_extract.working_check(links)
 with open(DIR + 'links.txt', 'w', encoding='utf-8') as info:
     for line in working_links:
         info.write(line)
+#Вызывается функция films_pages из блока Functional
+films_pages = Functional.films_pages(DIR + 'links.txt')
 
-
+films_info = Media_parser(films_pages, headers)
+with open(DIR + 'films.txt', 'w', encoding='utf-8') as info:
+    for line in films_info:
+        info.write(line)
