@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS online_cinema;
 CREATE DATABASE online_cinema;
 USE online_cinema;
 
-CREATE TABLE `Films` (
+CREATE TABLE `films` (
     `id` INT NOT NULL,
     `film_name` varchar(255) NOT NULL,
     `release_date` DATE(255) NOT NULL,
