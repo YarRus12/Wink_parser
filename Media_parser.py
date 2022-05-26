@@ -35,25 +35,26 @@ class film_reaper(page_parser):
                 # под этим же якорем
                 self.film_age_rating = link.attrs['span']
 
-
+        # Вытаскиваем средний рейтинг фильма по версии Wink
+        # На самом деле вытаскиваем только 1 цифру среднего рейтинга
         for link in soup.find_all('???', '????'=re.compile('rating_wink_int_part_r17g8ivt')):
             if link.attrs['href'] is not None:
                 self.avr_grade = (link.attrs['????'])
-
-
+        # Вытаскиваем описание фильма
         for link in soup.find('??', ???=re.compile('media-item-description$')):
             if link.attrs['????'] is not None:
                 self.description = link.attrs['????']
+        # Вытаскиваем жанр фильма
+        for link in soup.find('a', href=re.compile('^movies\?vod_genres')):
+            if link.attrs['href'] is not None:
+                self.genre = link.attrs['href'].split('=')[0]
+        # Вытаскиваем имя режиссера
+        for link in soup.find('??', href=re.compile('root_r1ru04lg name_ntjejvp bold_bgok4v root_subtitle1_r18emsye')):
+            if link.attrs['????'] is not None:
+                    surname = link.attrs['????']
+        for link in soup.find('????', href=re.compile('root_r1ru04lg name_ntjejvp root_subtitle2_rt60wi')):
+            if link.attrs['????'] is not None:
+                name = link.attrs['????']
+        self.main_director = f'{surname} {name}'
 
-                href="/movies?vod_genres=49542078"
-
-
-"""
-`id`,
-    `film_name`,
-    `release_date`,
-    `avr_grade`,
-    `description`,
-    `duration`,
-    `link`,
-    `main_director` """
+        return self.id, self.film_name, self.release_date, self.duration, self.film_age_rating, self.link, self.main_director
