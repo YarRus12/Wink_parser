@@ -21,15 +21,26 @@ class film_reaper(page_parser):
         pass
 
     def reaper(self):
+        # Вытаскиваем наименование фильма
         for link in self.soup.find('____???____', '????'=re.compile('media-item-name')):
             if link.attrs['????'] is not None:
                 self.film_name = link.attrs['????'']
+
+        # Вытаскиваем дату релиза, продолжительность и возрастные ограничения фильма
         for link in soup.find_all('a', href=re.compile('^\/movies\?years=.*')):
             if link.attrs['href'] is not None:
                 self.release_date = ((link.attrs['href']).split('=')[-1])
+                # под этим же якорем
+                self.duration = link.attrs['span']
+                # под этим же якорем
+                self.film_age_rating = link.attrs['span']
+
+
         for link in soup.find_all('???', '????'=re.compile('rating_wink_int_part_r17g8ivt')):
             if link.attrs['href'] is not None:
                 self.avr_grade = (link.attrs['????'])
+
+
         for link in soup.find('??', ???=re.compile('media-item-description$')):
             if link.attrs['????'] is not None:
                 self.description = link.attrs['????']

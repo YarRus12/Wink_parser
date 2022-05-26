@@ -5,6 +5,7 @@ CREATE TABLE `Films` (
     `avr_grade` FLOAT NOT NULL,
     `description` TEXT NOT NULL,
     `duration` TIME NOT NULL,
+    `film_age_rating` INT NOT NULL,
     `link` varchar(255) NOT NULL,
     `main_director` INT NOT NULL,
     PRIMARY KEY (`id`)
