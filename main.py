@@ -10,6 +10,8 @@ import Links_extract
 import Functional
 import Media_parser
 
+import PyMySQL
+
 DIR = os.path.dirname(os.path.abspath(__file__))
 #В качестве URL передаем ссылку на сайт онлайн кинотеатра Wink
 URL = 'https://wink.ru/media_items'

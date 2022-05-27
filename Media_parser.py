@@ -22,6 +22,7 @@ class film_reaper(page_parser):
 
     def reaper(self):
         # Вытаскиваем наименование фильма
+        print(self.soup) # Сперва проверим, что у нас собралось
         for link in self.soup.find('____???____', '????'=re.compile('media-item-name')):
             if link.attrs['????'] is not None:
                 self.film_name = link.attrs['????'']

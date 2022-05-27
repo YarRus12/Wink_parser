@@ -1,12 +1,17 @@
 import re
 # Функция отбора из рабочих ссылков сайта тех, где содержатся страницы с фильмами
-
-def films_pages(path):
+def films_pages(url: str, path: str) -> list:
     list_of_films = []
     with open(path, 'r', encoding='utf-8') as info:
         for line in info:
             #re.compile(r'')
             for link in line.find_all('a', href=re.compile('(\/media_items\/.*)')):
-                list_of_films.append(link)
-                # Не дописал смысл в том, что при совпадении строки с патерном строка сохраняется в множество set(),
-                # Эти множества будут перебиратьс в дайльнейшим для распарсевания страниц и поиска элементов
+                if link.attrs['href'] is not None:
+                    if link.attrs['href'] not in list_of_films:
+                        if link.attrs['href'].startswith('/'):
+                            list_of_films.append(url + link.attrs['href'])
+                        else:
+                            list_of_films.append(link.attrs['href'])
+            else:
+                print("Connection Error")
+            return list_of_films
