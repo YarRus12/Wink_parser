@@ -5,9 +5,11 @@ import urllib
 from bs4 import BeautifulSoup
 import re
 from fake_user_agent.main import user_agent
+import selenium
 
 def without_post(url, headers):
     response = requests.get(url, headers=headers)
+    driver = webdriver.Firefox()
     Links = []
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -23,21 +25,20 @@ def without_post(url, headers):
         print("Connection Error")
     return Links
 
-def working_check(links):
+def working_check(links, headers):
     #Проверяем что ссылки рабочие
     working_links = []
     for link in links:
         response = requests.get(link, headers=headers)
         if response.status_code == 200:
             working_links.append(link)
-            print(f'Ссылка {link} работает и добавлена в словарь добавлена')
+            print(f'Ссылка {link} работает и добавлена в словарь')
         else:
             print(f'Ссылка {link} не отвечает')
     return working_links
 
-
 if __name__ == '__main__':
     links = without_post(URL, headers)
-    working_check(links)
+    working_check(links, headers)
 
 #for x in working_links: print(x)
