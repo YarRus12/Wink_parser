@@ -21,20 +21,22 @@ headers = {'accept': '*/*', 'user-agent': user_agent}
 
 def write_content(DIR, name, content):
     with open(DIR + name, 'w', encoding='utf-8') as info:
+        number = 1
         for line in content:
-            info.write(line)
-            print(f'{line} записана в файл')
+            info.write(line+'\n')
+            print(f'{number} {line} записана в файл')
+            number += 1
 
 
 #Поиск всех ссылок
-links = Links_extract.without_post(URL, headers)
+links = Links_extract.parse_pages(URL, headers)
 #Проверка работоспособности ссылок
 working_links = Links_extract.working_check(links, headers)
-print(working_links)
+#Все работоспособные ссылки сохраняем в предварительный файл
+write_content(DIR, '\pool.txt', working_links)
 
-#Все работоспособные ссылки сохраняем в отдельный файл
 
-write_content(DIR, '\link.txt', working_links)
+
 
 #
 #
