@@ -24,7 +24,6 @@ def write_content(DIR, name, content):
     with open(DIR + name, 'w', encoding='utf-8') as info:
         for line in content:
             *args, id = line.split('/')
-            print(id)
             if id.isdigit():
                 info.write(id+'\n')
                 number += 1
@@ -37,19 +36,17 @@ def result_list(DIR: str, path: str):
         with open(path, 'r', encoding='utf-8') as pool:
             all_id = open(DIR + '/result_list.txt').readlines()
             all_id = [id.rstrip() for id in all_id]
-            print(all_id)
             new = []
             for new_id in pool:
                 if new_id.rstrip() not in all_id:
                     new.append(new_id)
-            print(new)
             for id in new:
                 result.write(id)
+            print(f'В файл {DIR+"/result_list.txt"} дописаны {len(new)} id')
 
 
-#DIR = os.path.dirname(os.path.abspath(__file__))
-#result_list(DIR, DIR+'\pool.txt')
-
+DIR = os.path.dirname(os.path.abspath(__file__))
+print(f" Результирующий список включает в себя {len(open(DIR + '/result_list.txt').readlines())} id")
 
 if __name__ == '__main__':
     list_of_films = films_pages()

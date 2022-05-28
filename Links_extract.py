@@ -8,7 +8,10 @@ from fake_user_agent.main import user_agent
 import selenium
 from selenium import webdriver
 import time
-from selenium.webdriver.chrome.options import Options
+from selenium import webdriver
+
+import os
+
 
 def dinamic_page_open(url, headers):
     response = requests.get(url, headers=headers)
@@ -18,9 +21,11 @@ def dinamic_page_open(url, headers):
         options.add_argument('headless')
         driver = webdriver.Chrome(chrome_options=options)
         driver.get(url)
+
         """Открытие страницы вживую"""
         #driver = webdriver.Chrome()#Открытие страницы вживую
         #driver.get(url) #Открытие страницы вживую
+
         SCROLL_PAUSE_TIME = 5
         # Get scroll height
         last_height = driver.execute_script("return document.body.scrollHeight")
@@ -38,7 +43,7 @@ def dinamic_page_open(url, headers):
             last_height = new_height
             iterations += 1
             print(f'Программа успешно прокрутила страницу вниз {iterations} раз(-а)')
-        time.sleep(SCROLL_PAUSE_TIME)
+
         html_content = driver.page_source
         #driver.close()
         return html_content
@@ -46,7 +51,7 @@ def dinamic_page_open(url, headers):
 def parse_pages(url, headers):
         Links = []
         html_content = dinamic_page_open(url, headers)
-        soup = BeautifulSoup(html_content, 'html.parser')
+        soup = BeautifulSoup(html_content, 'lxml')
         #регулярным выражением ищем все ссылки в html и собираем их по сайту
         for link in soup.find_all('a', href=re.compile('^(/|.*' + url + ')')):
             if link.attrs['href'] is not None:

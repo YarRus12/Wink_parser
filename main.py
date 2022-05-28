@@ -19,28 +19,23 @@ user_agent = user_agent("chrome")
 #Передаем в переменную headers значения юзерагента
 headers = {'accept': '*/*', 'user-agent': user_agent}
 
-number_of_iter = 1
+number_of_iter = 10
 for i in range(number_of_iter):
-    Functional.result_list(DIR, DIR + '\pool.txt')
-    """#Поиск всех ссылок
-    print('Началась процедура поиска всех ссылок на странице')
+    #Поиск всех ссылок
+    print(f'Начался поиск всех ссылок на странице "{URL}"')
     links = Links_extract.parse_pages(URL, headers)
     #Проверка работоспособности ссылок
-    print('Началась процедура проверки работоспособности ссылок')
+    print('Началась проверка работоспособности ссылок')
     working_links = Links_extract.working_check(links, headers)
     #Все работоспособные ссылки сохраняем в предварительный файл
-    print('Началась процедура записи id фильмов')
-    Functional.write_content(DIR, '\pool.txt', working_links)"""
+    print('Началась запись id фильмов в предварительный файл')
+    Functional.write_content(DIR, '\pool.txt', working_links)
     #Проверяем, если данные ссылки отсутвуют итоговом и соответствуют требованиям, то сохраняем в итоговый
+    print('Началось включение id фильмов в результирующий список')
+    Functional.result_list(DIR, DIR + '\pool.txt')
+    print(f" Результирующий список включает в себя {len(set(open(DIR + '/result_list.txt').readlines()))} id")
 
 
-
-
-
-#
-#
-#Вызывается функция films_pages из блока Functional
-#films_pages = Functional.films_pages(DIR + 'links.txt')
 
 """
 films_info = Media_parser(films_pages, headers)
