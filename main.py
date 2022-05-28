@@ -19,13 +19,10 @@ user_agent = user_agent("chrome")
 #Передаем в переменную headers значения юзерагента
 headers = {'accept': '*/*', 'user-agent': user_agent}
 
-def write_content(DIR, name, content):
-    with open(DIR + name, 'w', encoding='utf-8') as info:
-        number = 1
-        for line in content:
-            info.write(line+'\n')
-            print(f'{number} {line} записана в файл')
-            number += 1
+
+
+
+
 
 
 #Поиск всех ссылок

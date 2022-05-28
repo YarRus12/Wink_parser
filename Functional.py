@@ -15,3 +15,16 @@ def films_pages(url: str, path: str) -> list:
             else:
                 print("Connection Error")
             return list_of_films
+
+
+def write_content(DIR, name, content):
+    with open(DIR + name, 'w', encoding='utf-8') as info:
+        number = 1
+        for line in content:
+            info.write(line+'\n')
+            print(f'{number} {line} записана в файл{name}')
+            number += 1
+
+if __name__ == '__main__':
+    list_of_films = films_pages()
+    write_content()
