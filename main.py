@@ -26,13 +26,16 @@ for i in range(number_of_iter):
     links = Links_extract.parse_pages(URL, headers)
     #Проверка работоспособности ссылок
     print('Началась проверка работоспособности ссылок')
-    working_links = Links_extract.working_check(links, headers)
-    #Все работоспособные ссылки сохраняем в предварительный файл
-    print('Началась запись id фильмов в предварительный файл')
-    Functional.write_content(DIR, '\pool.txt', working_links)
+    working_links = Functional.working_check(links, headers)
+    print('Началась выборка ссылок с фильмами из работоспособных ссылок')
+    film_links = Functional.films_pages(links, URL)
+    #Из ссылок с фильмами отбираются id
+    print('Началась выборка id фильмов')
+    id_list = Functional.id_separator(film_links)
+    print(id_list)
     #Проверяем, если данные ссылки отсутвуют итоговом и соответствуют требованиям, то сохраняем в итоговый
     print('Началось включение id фильмов в результирующий список')
-    Functional.result_list(DIR, DIR + '\pool.txt')
+    Functional.result_list(DIR, id_list)
     print(f" Результирующий список включает в себя {len(set(open(DIR + '/result_list.txt').readlines()))} id")
 
 

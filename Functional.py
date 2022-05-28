@@ -1,53 +1,66 @@
+import requests
 import re
 import os
 
-# Функция отбора из рабочих ссылков сайта тех, где содержатся страницы с фильмами
-def films_pages(url: str, path: str) -> list:
+def films_pages(links: list, url: str) -> list:
+    """Функция принимает в себя рабочие ссылки сайта и возвращает список  страницы с фильмами
+    или с другим медиаконтентом"""
     list_of_films = []
-    with open(path, 'r', encoding='utf-8') as info:
-        for line in info:
-            #re.compile(r'')
-            for link in line.find_all('a', href=re.compile('(\/media_items\/.*)')):
-                if link.attrs['href'] is not None:
-                    if link.attrs['href'] not in list_of_films:
-                        if link.attrs['href'].startswith('/'):
-                            list_of_films.append(url + link.attrs['href'])
-                        else:
-                            list_of_films.append(link.attrs['href'])
-            else:
-                print("Connection Error")
-            return list_of_films
+    for line in links:
+        patern = '(\/media_items\/media_items\/.*)'
+        if re.search(patern, line) is not None:
+            list_of_films.append(line)
+    print(f'Отобрано {len(list_of_films)} ссылок с медиа контентом')
+    return list_of_films
 
-
-def write_content(DIR, name, content):
+def id_separator(content: list) -> list:
+    """Функция принимет в список ссылок на медиафайлы.
+    И возвращает файл с id медиафайлов. "Этот предварительный этап можно было бы опустить,
+    но он является удобным страхующим механизмом от потери данных"""
     number = 0
-    with open(DIR + name, 'w', encoding='utf-8') as info:
-        for line in content:
-            *args, id = line.split('/')
-            if id.isdigit():
-                info.write(id+'\n')
-                number += 1
-            #print(f'Ссылка {number} {line} записана в файл{name}')
-    print(f'{number} ссылок записаны в файл {name}')
+    id_list = []
+    for line in content:
+        *args, id = line.split('/')
+        if id.isdigit():
+            id_list.append(id)
+            number += 1
+    print(f'{number} id отобраны для включения в итоговый файл')
+    return id_list
 
 
-def result_list(DIR: str, path: str):
+def result_list(DIR: str, id_list: list):
+    """Функция принимает в себя путь и список id медиа файлов
+    Сверяет новые id медиа файлов со старыми и дописывает их в результирующий список"""
     with open(DIR + '/result_list.txt', 'a', encoding='utf-8') as result:
-        with open(path, 'r', encoding='utf-8') as pool:
-            all_id = open(DIR + '/result_list.txt').readlines()
-            all_id = [id.rstrip() for id in all_id]
-            new = []
-            for new_id in pool:
-                if new_id.rstrip() not in all_id:
-                    new.append(new_id)
-            for id in new:
-                result.write(id)
-            print(f'В файл {DIR+"/result_list.txt"} дописаны {len(new)} id')
+        all_id = open(DIR + '/result_list.txt').readlines()
+        all_id = [id.rstrip() for id in all_id]
+        new = []
+        for new_id in id_list:
+            print(new_id)
+            if new_id.rstrip() not in all_id:
+                new.append(new_id+'\n')
+        for id in new:
+            result.write(id)
+        print(f'В файл {DIR+"/result_list.txt"} дописаны {len(new)} id')
 
 
-DIR = os.path.dirname(os.path.abspath(__file__))
-print(f" Результирующий список включает в себя {len(open(DIR + '/result_list.txt').readlines())} id")
+def working_check(links: list, headers: str) -> list:
+    """Функция принимает в себя список ссылок и заголовки,
+    проверяет работоспособность ссылок и возвращает список работоспособных ссылок"""
+    working_links = []
+    n = 0
+    for link in links:
+        response = requests.get(link, headers=headers)
+        if response.status_code == 200:
+            working_links.append(link)
+            n += 1
+        #    print(f'Обнаруженная ссылка № {n} {link} работает и добавлена в список')
+        #else:
+        #    print(f'Обнаруженная ссылка № {n} {link} не отвечает')
+    print(f'Работоспособны {n} ссылок')
+    return working_links
 
 if __name__ == '__main__':
     list_of_films = films_pages()
-    write_content()
+    id_separator()
+    working_check()
