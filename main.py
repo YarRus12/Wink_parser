@@ -19,18 +19,20 @@ user_agent = user_agent("chrome")
 #Передаем в переменную headers значения юзерагента
 headers = {'accept': '*/*', 'user-agent': user_agent}
 
+number_of_iter = 1
+for i in range(number_of_iter):
+    Functional.result_list(DIR, DIR + '\pool.txt')
+    """#Поиск всех ссылок
+    print('Началась процедура поиска всех ссылок на странице')
+    links = Links_extract.parse_pages(URL, headers)
+    #Проверка работоспособности ссылок
+    print('Началась процедура проверки работоспособности ссылок')
+    working_links = Links_extract.working_check(links, headers)
+    #Все работоспособные ссылки сохраняем в предварительный файл
+    print('Началась процедура записи id фильмов')
+    Functional.write_content(DIR, '\pool.txt', working_links)"""
+    #Проверяем, если данные ссылки отсутвуют итоговом и соответствуют требованиям, то сохраняем в итоговый
 
-
-
-
-
-
-#Поиск всех ссылок
-links = Links_extract.parse_pages(URL, headers)
-#Проверка работоспособности ссылок
-working_links = Links_extract.working_check(links, headers)
-#Все работоспособные ссылки сохраняем в предварительный файл
-write_content(DIR, '\pool.txt', working_links)
 
 
 
