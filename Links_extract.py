@@ -35,7 +35,7 @@ def dinamic_page_open(url: str, headers: str):
         # Счетчик итераций
         iterations = 0
         # Цикл прокручивающий страницу вниз
-        while iterations < 3:
+        while iterations < 20:
         #while True:
             # Выполнение скрипта по прокрутке страницы в самый низ
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")

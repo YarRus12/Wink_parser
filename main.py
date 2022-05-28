@@ -8,7 +8,7 @@ import re
 from fake_user_agent.main import user_agent
 import Links_extract
 import Functional
-#import Media_parser
+import Media_parser
 #import PyMySQL
 
 DIR = os.path.dirname(os.path.abspath(__file__))
@@ -19,7 +19,10 @@ user_agent = user_agent("chrome")
 #Передаем в переменную headers значения юзерагента
 headers = {'accept': '*/*', 'user-agent': user_agent}
 
-number_of_iter = 10
+"""
+ГОТОВЫЙ БЛОК 
+
+number_of_iter = 40
 for i in range(number_of_iter):
     #Поиск всех ссылок
     print(f'Начался поиск всех ссылок на странице "{URL}"')
@@ -32,17 +35,16 @@ for i in range(number_of_iter):
     #Из ссылок с фильмами отбираются id
     print('Началась выборка id фильмов')
     id_list = Functional.id_separator(film_links)
-    print(id_list)
     #Проверяем, если данные ссылки отсутвуют итоговом и соответствуют требованиям, то сохраняем в итоговый
     print('Началось включение id фильмов в результирующий список')
     Functional.result_list(DIR, id_list)
     print(f" Результирующий список включает в себя {len(set(open(DIR + '/result_list.txt').readlines()))} id")
-
-
-
 """
-films_info = Media_parser(films_pages, headers)
-with open(DIR + 'films.txt', 'w', encoding='utf-8') as info:
-    for line in films_info:
-        info.write(line)
-"""
+
+films_url = 'https://wink.ru/media_items/'
+with open(DIR + '/result_list.txt', 'r', encoding='utf-8') as f:
+    for i in range(1):
+        for i in f:
+            films_info = Media_parser.page_parser(i, films_url, headers)
+            print(films_info)
+            films_info
