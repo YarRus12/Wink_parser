@@ -21,17 +21,16 @@ headers = {'accept': '*/*', 'user-agent': user_agent}
 
 """
 ГОТОВЫЙ БЛОК 
-
 number_of_iter = 40
 for i in range(number_of_iter):
     #Поиск всех ссылок
     print(f'Начался поиск всех ссылок на странице "{URL}"')
     links = Links_extract.parse_pages(URL, headers)
+    print('Началась выборка ссылок с фильмами из ссылок')
+    film_links = Functional.films_pages(links, URL)
     #Проверка работоспособности ссылок
     print('Началась проверка работоспособности ссылок')
-    working_links = Functional.working_check(links, headers)
-    print('Началась выборка ссылок с фильмами из работоспособных ссылок')
-    film_links = Functional.films_pages(links, URL)
+    film_links = Functional.working_check(film_links, headers)
     #Из ссылок с фильмами отбираются id
     print('Началась выборка id фильмов')
     id_list = Functional.id_separator(film_links)
