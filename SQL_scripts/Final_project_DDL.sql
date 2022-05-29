@@ -16,11 +16,10 @@ CREATE TABLE `films` (
 );
 
 CREATE TABLE `actors` (
-    `id` INT NOT NULL,
+    `id` SERIAL NOT NULL PRIMARY KEY,
     `name` varchar(255) NOT NULL,
-    `birth_date` DATE NOT NULL,
+    `birth_date` DATE NOT NULL
     --`films` DATE NOT NULL,
-    PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `actors_in_films` (
