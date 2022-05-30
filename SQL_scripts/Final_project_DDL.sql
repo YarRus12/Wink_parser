@@ -64,8 +64,10 @@ ALTER TABLE `films_genres` ADD CONSTRAINT `films_genres_fk1`
         ON UPDATE CASCADE ON DELETE CASCADE;
 
 CREATE TABLE `subscription` (
-    `id` INT NOT NULL,
+    `id` SERIAL NOT NULL,
+    `name` VARCHAR (20)
     `description` TEXT NOT NULL,
+    -- добавить ограниченный кргу значений и значение по дефолту
     PRIMARY KEY (`id`)
 );
 
@@ -86,7 +88,6 @@ CREATE TABLE `client` (
     `id` INT NOT NULL,
     `name` varchar(50) NOT NULL,
     `surname` varchar(50) NOT NULL,
-    `patronymic` varchar(50) NOT NULL,
     `birthdate` DATE NOT NULL,
     `subscription_id` INT NOT NULL,
     PRIMARY KEY (`id`)
@@ -95,6 +96,7 @@ CREATE TABLE `client` (
 CREATE TABLE `card` (
     `number` INT NOT NULL,
     `client_id` INT NOT NULL,
+    `effective_from` DATE NOT NULL,
     `effective_to` DATE NOT NULL,
     PRIMARY KEY (`number`)
 );
