@@ -19,7 +19,7 @@ CREATE TABLE `films` (
     `description` TEXT NOT NULL,
     `duration` TIME NOT NULL,
     `film_age_rating` INT NOT NULL,
-    `link` varchar(255) NOT NULL,
+    `link` varchar(255) NOT NULL UNIQUE,
     `main_director_id` BIGINT NOT NULL,
     FOREIGN KEY (main_director_id) REFERENCES directors (id) ON UPDATE CASCADE ON DELETE CASCADE);
 
