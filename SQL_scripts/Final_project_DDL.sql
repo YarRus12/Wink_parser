@@ -17,7 +17,7 @@ CREATE TABLE `films` (
     `release_date` DATE NOT NULL,
     `avr_grade` FLOAT NOT NULL,
     `description` TEXT NOT NULL,
-    `duration` TIME NOT NULL,
+    `duration` VARCHAR(50) NOT NULL,
     `film_age_rating` INT NOT NULL,
     `link` varchar(255) NOT NULL UNIQUE,
     `main_director_id` BIGINT NOT NULL,
