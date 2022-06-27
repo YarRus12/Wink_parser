@@ -13,35 +13,36 @@ def films_pages(links: list, url: str) -> list:
     print(f'Отобрано {len(list_of_films)} ссылок с медиа контентом')
     return list_of_films
 
-def id_separator(content: list) -> list:
+def id_separator(content: list) -> (list,str):
     """Функция принимет в список ссылок на медиафайлы.
-    И возвращает список ссылок на медиафайлы и id медиафайлов. "Этот предварительный этап можно было бы опустить,
+    И возвращает список id медиафайлов и часть адреса общего для медиафайлов. "Этот предварительный этап можно было бы опустить,
     но он является удобным страхующим механизмом от потери данных"""
     id_list = []
-    films_links = []
+    films_link = ''
     for line in content:
         *args, id = line.split('/')
         if id.isdigit():
             id_list.append(id)
-            films_links.append(line)
+            #films_links.append(line)
+    films_link = content[0].split('/'+str(id))
     print(f'{len(id_list)} id отобраны для включения в итоговый файл')
-    return films_links,id_list
+    return films_link, id_list
 
 
-def result_list(DIR: str, id_list: list):
-    """Функция принимает в себя путь и список id медиа файлов
-    Сверяет новые id медиа файлов со старыми и дописывает их в результирующий список"""
+def result_list(DIR: str, id_list: list, films_link: str):
+    """Функция принимает в себя путь и список id медиа файлов и часть ссылки на медиматериалы
+    Сверяет новые id медиа файлов со старыми и дописывает их в результирующий список, вмсете с ссылками на них"""
     with open(DIR + '/result_list.txt', 'a', encoding='utf-8') as result:
         all_id = open(DIR + '/result_list.txt').readlines()
         all_id = [id.rstrip() for id in all_id]
         new = []
         for new_id in id_list:
-            print(new_id)
+            #print(new_id)
             if new_id.rstrip() not in all_id:
-                new.append(new_id+'\n')
+                new.extend((new_id+','), films_link+id+'\n')
         for id in new:
             result.write(id)
-        print(f'В файл {DIR+"/result_list.txt"} дописаны {len(new)} id')
+    print(f'В файл {DIR+"/result_list.txt"} дописаны {len(new)} id')
 
 
 def working_check(links: list, headers: str) -> list:

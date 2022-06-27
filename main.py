@@ -37,7 +37,7 @@ for i in range(number_of_iter):
     film_links, id_list = Functional.id_separator(film_links)
     #Проверяем, если данные ссылки отсутвуют итоговом и соответствуют требованиям, то сохраняем в итоговый
     print('Началось включение id фильмов в результирующий список')
-    Functional.result_list(DIR, id_list)
+    Functional.result_list(DIR, id_list, film_links)
     print(f" Результирующий список включает в себя {len(set(open(DIR + '/result_list.txt').readlines()))} id")
 
 
