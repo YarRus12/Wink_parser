@@ -12,8 +12,8 @@ import Media_parser
 #import PyMySQL
 
 DIR = os.path.dirname(os.path.abspath(__file__))
-#В качестве URL передаем ссылку на сайт онлайн кинотеатра Wink
-URL = 'https://wink.ru/media_items'
+URL = 'https://wink.ru/media_items' #В качестве URL передаем ссылку на сайт онлайн кинотеатра Wink
+#URL = https://www.kinopoisk.ru/lists/movies/?ss_subscription=ANY # Альтернатива это сайт kinopoisk
 #Настраеваем липовый юзерагент для работы с защищенными сайтами
 user_agent = user_agent("chrome")
 #Передаем в переменную headers значения юзерагента
@@ -21,7 +21,8 @@ headers = {'accept': '*/*', 'user-agent': user_agent}
 
 """
 ГОТОВЫЙ БЛОК 
-number_of_iter = 40
+"""
+number_of_iter = 40 #Это число прокручиваний вниз для динамической страницы
 for i in range(number_of_iter):
     #Поиск всех ссылок
     print(f'Начался поиск всех ссылок на странице "{URL}"')
@@ -33,12 +34,12 @@ for i in range(number_of_iter):
     film_links = Functional.working_check(film_links, headers)
     #Из ссылок с фильмами отбираются id
     print('Началась выборка id фильмов')
-    id_list = Functional.id_separator(film_links)
+    film_links, id_list = Functional.id_separator(film_links)
     #Проверяем, если данные ссылки отсутвуют итоговом и соответствуют требованиям, то сохраняем в итоговый
     print('Началось включение id фильмов в результирующий список')
     Functional.result_list(DIR, id_list)
     print(f" Результирующий список включает в себя {len(set(open(DIR + '/result_list.txt').readlines()))} id")
-"""
+
 
 films_url = 'https://wink.ru/media_items/'
 with open(DIR + '/result_list.txt', 'r', encoding='utf-8') as f:
@@ -47,3 +48,9 @@ with open(DIR + '/result_list.txt', 'r', encoding='utf-8') as f:
             films_info = Media_parser.page_parser(i, films_url, headers)
             print(films_info)
             films_info
+
+
+a = 5
+print(id(a))
+a = str(a)
+print(id(a))

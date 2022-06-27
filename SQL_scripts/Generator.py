@@ -208,18 +208,28 @@ n = 1
 for client in accounts:
     id = n
     name, surname = client[1].split(' ')
-    birth_date = client[2]
+    birth_year, birth_m, birth_d = client[2].split('-')
+    birth_year = random.randint(1984, 2000)
+    birth_date = f'{birth_year}-{birth_m}-{birth_d}'
     email = client[3]
     effentive_to = client[4]
     result = f"('{id}','{name}','{surname}', STR_TO_DATE('{birth_date}', '%Y-%m-%d'), '{email}', STR_TO_DATE('{effentive_to}', '%Y-%m-%d')),"
     new.append(result)
     n += 1
+#for i in new:
+#    print(i)
 
-card =  []
-#    ("5152346436523438",2,STR_TO_DATE('2020-07-03', '%Y-%m-%d'),STR_TO_DATE('2023-07-03', '%Y-%m-%d')),
+cards = []
+card_holder = []
 
-for i in range(100):
-    print(f"('{random.randint(1111, 9999)}{random.randint(1111, 9999)}{random.randint(1111, 9999)}{random.randint(1111, 9999)}',{random.randint(1,200)}, STR_TO_DATE('{random.randint(2018, 2021)}-{random.randint(1, 12)}-{random.randint(1, 28)}', '%Y-%m-%d'), STR_TO_DATE('{random.randint(2022, 2024)}-{random.randint(2, 12)}-{random.randint(1, 28)}', '%Y-%m-%d')),")
+i = 1
+while i < 100:
+    n = random.randint(1,200)
+    if n not in card_holder:
+        i += 1
+        line = f"('{random.randint(1111, 9999)}{random.randint(1111, 9999)}{random.randint(1111, 9999)}{random.randint(1111, 9999)}',{random.randint(1,200)}, STR_TO_DATE('{random.randint(2018, 2021)}-{random.randint(1, 12)}-{random.randint(1, 28)}', '%Y-%m-%d'), STR_TO_DATE('{random.randint(2022, 2024)}-{random.randint(2, 12)}-{random.randint(1, 28)}', '%Y-%m-%d')),"
+        print(line)
+        cards.append(line)
 
 
 

@@ -15,17 +15,17 @@ def films_pages(links: list, url: str) -> list:
 
 def id_separator(content: list) -> list:
     """Функция принимет в список ссылок на медиафайлы.
-    И возвращает файл с id медиафайлов. "Этот предварительный этап можно было бы опустить,
+    И возвращает список ссылок на медиафайлы и id медиафайлов. "Этот предварительный этап можно было бы опустить,
     но он является удобным страхующим механизмом от потери данных"""
-    number = 0
     id_list = []
+    films_links = []
     for line in content:
         *args, id = line.split('/')
         if id.isdigit():
             id_list.append(id)
-            number += 1
-    print(f'{number} id отобраны для включения в итоговый файл')
-    return id_list
+            films_links.append(line)
+    print(f'{len(id_list)} id отобраны для включения в итоговый файл')
+    return films_links,id_list
 
 
 def result_list(DIR: str, id_list: list):
@@ -64,3 +64,5 @@ if __name__ == '__main__':
     list_of_films = films_pages()
     id_separator()
     working_check()
+
+

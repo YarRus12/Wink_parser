@@ -35,6 +35,7 @@ DROP TABLE IF EXISTS actors_in_films;
 CREATE TABLE `actors_in_films` (
     `film_id` BIGINT   NOT NULL,
     `actor_id` BIGINT  NOT NULL,
+    PRIMARY KEY (film_id, actor_id),
     FOREIGN KEY (film_id) REFERENCES films (id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (actor_id) REFERENCES actors (id) ON UPDATE CASCADE ON DELETE CASCADE);
 
@@ -49,8 +50,9 @@ DROP TABLE IF EXISTS films_genres;
 CREATE TABLE `films_genres` (
     `film_id` BIGINT NOT NULL,
     `genre_id` INT NOT NULL,
-    FOREIGN KEY (`film_id`) REFERENCES `films`(`id`),
-    FOREIGN KEY (`genre_id`) REFERENCES `genres`(`id`)
+    PRIMARY KEY (film_id, genre_id),
+    FOREIGN KEY (`film_id`) REFERENCES `films`(`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (`genre_id`) REFERENCES `genres`(`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS subscription; 
@@ -64,6 +66,7 @@ DROP TABLE IF EXISTS films_id_subscription;
 CREATE TABLE `films_id_subscription` (
     `subscription_id` INT NOT NULL,
     `film_id` BIGINT NOT NULL,
+    PRIMARY KEY (subscription_id, film_id),
     FOREIGN KEY (`subscription_id`) REFERENCES `subscription`(`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (`film_id`) REFERENCES `films`(`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
