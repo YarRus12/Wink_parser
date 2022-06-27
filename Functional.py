@@ -42,6 +42,11 @@ def result_list(DIR: str, id_list: list, films_link: str):
                 new.extend((new_id+','), films_link+id+'\n')
         for id in new:
             result.write(id)
+            """
+            Немного изменил логику работы кода, функция separator теперь возвращает ссылку на 
+            фильм без id и список id. А функция добавления в итоговый файл созвращает текстовый 
+            """
+
     print(f'В файл {DIR+"/result_list.txt"} дописаны {len(new)} id')
 
 
