@@ -54,16 +54,14 @@ def working_check(links: list, headers: str) -> list:
     """Функция принимает в себя список ссылок и заголовки,
     проверяет работоспособность ссылок и возвращает список работоспособных ссылок"""
     working_links = []
-    n = 0
     for link in links:
         response = requests.get(link, headers=headers)
         if response.status_code == 200:
             working_links.append(link)
-            n += 1
         #    print(f'Обнаруженная ссылка № {n} {link} работает и добавлена в список')
         #else:
         #    print(f'Обнаруженная ссылка № {n} {link} не отвечает')
-    print(f'Работоспособны {n} ссылок')
+    print(f'Работоспособны {len(working_links)} ссылок')
     return working_links
 
 if __name__ == '__main__':

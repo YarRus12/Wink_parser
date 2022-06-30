@@ -63,7 +63,7 @@ def parse_pages(url: str, headers: str) -> list:
         if link.attrs['href'] is not None:
             if link.attrs['href'] not in Links:
                 if link.attrs['href'].startswith('/'):
-                        Links.append(url + link.attrs['href'])
+                    Links.append(url + link.attrs['href'])
                 else:
                     Links.append(link.attrs['href'])
         else:
