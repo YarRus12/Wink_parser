@@ -34,10 +34,11 @@ def result_list(DIR: str, id_list: list, films_link: str):
     Сверяет новые id медиа файлов со старыми и дописывает их в результирующий список, вмсете с ссылками на них"""
     with open(DIR + '/result_list.txt', 'a', encoding='utf-8') as result:
         all_id = open(DIR + '/result_list.txt').readlines()
-        all_id = [id.rstrip() for id in all_id]
+        all_id = [line.rstrip() for line[0] in all_id]
         new = []
         for new_id in id_list:
             #print(new_id)
+            """Это можно сделать лучше"""
             if new_id.rstrip() not in all_id:
                 new.extend((new_id+','), films_link+id+'\n')
         for id in new:
