@@ -8,7 +8,9 @@ from fake_user_agent.main import user_agent
 import selenium
 from selenium import webdriver
 import time
-from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 
 import os
 
@@ -35,7 +37,17 @@ def dinamic_page_open(url: str, headers: str):
         # Счетчик итераций
         iterations = 0
         # Цикл прокручивающий страницу вниз
-        while iterations < 20:
+        """
+        try:
+        Нужно оттестировать и приспособить этот блок
+    driver.implicitly_wait(10)
+    wait = WebDriverWait(driver, 10)
+    wait.until(EC.presence_of_element_located((By.ID, "live-table")))
+    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "section.event")))
+    print(driver.page_source)
+        
+        """
+        while iterations < 5:
         #while True:
             # Выполнение скрипта по прокрутке страницы в самый низ
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -47,7 +59,7 @@ def dinamic_page_open(url: str, headers: str):
                 break
             last_height = new_height
             iterations += 1
-            print(f'Программа успешно прокрутила страницу вниз {iterations} раз(-а)')
+        print(f'Программа успешно прокрутила страницу вниз {iterations} раз(-а)')
 
         html_content = driver.page_source
         return html_content
